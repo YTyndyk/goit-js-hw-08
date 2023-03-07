@@ -1,3 +1,5 @@
+import throttle from 'lodash.throttle';
+const STORAGE_KEY = 'feedback-form-state';
 const feedbackForm = document.querySelector('.feedback-form');
 const selectedDataForms = {};
 
@@ -11,19 +13,16 @@ feedbackForm.addEventListener('submit', evt => {
     console.log(value, name);
   });
   evt.currentTarget.reset();
-  localStorage.removeItem('feedback-form-state');
+  localStorage.removeItem(STORAGE_KEY);
 });
 feedbackForm.addEventListener('input', evt => {
-  selectedDataForms[evt.target.name] = evt.target.value;
+  selectedDataForms[evt.target.name] = evt.target.value.trim();
   console.log(selectedDataForms);
-  localStorage.setItem(
-    'feedback-form-state',
-    JSON.stringify(selectedDataForms)
-  );
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedDataForms));
 });
 
 function populateDataForm() {
-  let persistedDatas = localStorage.getItem('feedback-form-state');
+  let persistedDatas = localStorage.getItem(STORAGE_KEY);
   if (persistedDatas) {
     persistedDatas = JSON.parse(persistedDatas);
     Object.entries(persistedDatas).forEach(([email, message]) => {
