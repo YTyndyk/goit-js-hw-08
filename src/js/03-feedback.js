@@ -10,15 +10,13 @@ feedbackForm.addEventListener('input', throttle(onInputData, 500));
 
 function onFormSubmit(evt) {
   evt.preventDefault();
+  const { email, message } = feedbackForm.elements;
 
-  const formData = new FormData(feedbackForm);
-  formData.forEach((value, name) => {
-    if (value === '' || name === '') {
-      alert('Не всі заповнені поля!');
-    } else {
-      console.log(value, name);
-    }
-  });
+  if (email.value === '' || message.value === '') {
+    return alert('Не всі поля заповнені!');
+  } else {
+    console.log({ email: email.value, message: message.value });
+  }
 
   evt.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
