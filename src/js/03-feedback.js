@@ -13,7 +13,11 @@ function onFormSubmit(evt) {
 
   const formData = new FormData(feedbackForm);
   formData.forEach((value, name) => {
-    console.log(value, name);
+    if (value === '' || name === '') {
+      alert('Не всі заповнені поля!');
+    } else {
+      console.log(value, name);
+    }
   });
 
   evt.currentTarget.reset();
